@@ -2,10 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
  
 #Source the shell file for zsh
-source /Users/bstrecansky/.oh-my-zsh/oh-my-zsh.sh
-
-# Define JAVA_HOME
-export JAVA_HOME=$(/usr/libexec/java_home)
+source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 # Set ZSH theme
 ZSH_THEME="dieter"
@@ -47,7 +44,7 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Path Definitions
 export GOPATH=$HOME/go
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/versions:/:/$HOME/go/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin"
 
 #Source the shell file for zsh
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
@@ -228,4 +225,4 @@ rsync -rtvz ~/Desktop/thenomdepot -e ssh sshacs@mailchimp.upload.akamai.com:/391
 }
 
 # Set pyenv properly
-eval "$(pyenv init -)"
+eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
