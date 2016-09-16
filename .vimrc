@@ -9,7 +9,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'L9'
-Plugin 'git://git.wincent.com/command-t.git'
+"Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 "Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -20,7 +20,7 @@ Plugin 'Lokaltog/powerline'
 Bundle 'scrooloose/nerdtree'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'sjl/badwolf'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
