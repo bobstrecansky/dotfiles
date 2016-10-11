@@ -20,7 +20,6 @@ zstyle ':completion:*:hosts' hosts $_ssh_config
 setopt auto_cd
 cdpath=($HOME/git)
 
-eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
 #powerline-daemon -q
 #POWERLINE_BASH_CONTINUATION=1
 #POWERLINE_BASH_SELECT=1
@@ -45,6 +44,9 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # Path Definitions
 export GOPATH=$HOME/go
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin"
+
+# Source pyenv and pyvenv
+eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
 
 #Source the shell file for zsh
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
