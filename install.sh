@@ -13,3 +13,4 @@ vim +PluginInstall +qall
 pyenv install 3.5.2
 cp python/.python-version ~/.python-version
 cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer
+chsh -s $(which zsh)
