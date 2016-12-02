@@ -8,7 +8,7 @@ source $HOME/.oh-my-zsh/oh-my-zsh.sh
 ZSH_THEME="robbyrussell"
 
 # Activate ZSH plugins
-plugins=(git bundler osx rake ruby)
+plugins=(git bundler osx rake ruby python)
 
 # use UTF8
 set -g utf8
