@@ -1,4 +1,4 @@
-sudo yum -y install vim git zsh cmake
+yum -y install vim git zsh cmake
 curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
 curl -L https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
 curl -o ~/.zshrc https://raw.githubusercontent.com/bobstrecansky/dotfiles/master/.zshrc

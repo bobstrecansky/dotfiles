@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 # Set ZSH theme
-ZSH_THEME="dieter"
+ZSH_THEME="robbyrussell"
 
 # Activate ZSH plugins
 plugins=(git bundler osx rake ruby)
