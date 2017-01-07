@@ -1,5 +1,6 @@
 # Install Dependencies
-sudo yum -y install vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel
+sudo yum -y install sudo
+sudo yum -y install vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel 
 sudo yum -y groupinstall "Development Tools"
 
 # pyenv
