@@ -21,8 +21,8 @@ vim +PluginInstall +qall
 
 # install python environment
 pyenv install 3.5.2
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
 cp python/.python-version ~/.python-version
 
 # install YCM
-export PYTHON_CONFIGURE_OPTS="--enable-shared"
-cd ~/.vim/bundle/YouCompleteMe && ./install.py --all
+cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer
