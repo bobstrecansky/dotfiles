@@ -1,5 +1,4 @@
-# Install Dependencies                                                                                                                                                                                                                                                                                                                                                     
-
+# Install Dependencies                                                                                                                                                                                                                                                                                                                                                      
 # Remove vim-minimal garbage to install regular vim
 yum -y remove vim-minimal
 
@@ -25,10 +24,10 @@ cp vim/badwolf.vim ~/.vim/colors/
 vim +PluginInstall +qall
 
 # install python environment
+PYTHON_CONFIGURE_OPTS="--enable-shared"
 pyenv install 3.5.2
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
 cp python/.python-version ~/.python-version
 
 # install YCM
 cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer --system-libclang
-chsh -s /usr/bin/zsh
+zsh
