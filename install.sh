@@ -25,6 +25,9 @@ vim +PluginInstall +qall
 
 # install python environment
 PYTHON_CONFIGURE_OPTS="--enable-shared"
+echo $PYTHON_CONFIGURE_OPTS
+export PYENV_ROOT="$HOME/.pyenv"
+eval "$(pyenv init -)"
 pyenv install 3.5.2
 cp python/.python-version ~/.python-version
 
