@@ -26,4 +26,4 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 cp python/.python-version ~/.python-version
 
 # install YCM
-cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer
+cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer --system-libclang
