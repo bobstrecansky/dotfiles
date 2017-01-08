@@ -1,9 +1,6 @@
 # Define oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
  
-#Source the shell file for zsh
-source $HOME/.oh-my-zsh/oh-my-zsh.sh
-
 # Set ZSH theme
 ZSH_THEME="robbyrussell"
 
