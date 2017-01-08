@@ -1,33 +1,34 @@
-# Install Dependencies
-
+# Install Dependencies                                                                                                                                                                                                                                                                                                                                                     
+ 
 # Remove vim-minimal garbage to install regular vim
 yum -y remove vim-minimal
-
+ 
 # Install necessary system packages
-yum -y install sudovim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel
+yum -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel
 yum -y groupinstall "Development Tools"
-
+ 
 # pyenv
 curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-
+ 
 # oh-my-zsh
 curl -L https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
-
+ 
 # Copy dotfiles
 cp vim/.vimrc ~/.vimrc
 cp zsh/.zshrc ~/.zshrc
-
+ 
 # vim plugins
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 git clone https://github.com/ctrlpvim/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 mkdir -p ~/.vim/colors/
 cp vim/badwolf.vim ~/.vim/colors/
 vim +PluginInstall +qall
-
+ 
 # install python environment
 pyenv install 3.5.2
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 cp python/.python-version ~/.python-version
-
+ 
 # install YCM
 cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer --system-libclang
+chsh -s /usr/bin/zsh
