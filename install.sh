@@ -1,6 +1,11 @@
 # Install Dependencies
-sudo yum -y install vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel
-sudo yum -y groupinstall "Development Tools"
+
+# Remove vim-minimal garbage to install regular vim
+yum -y remove vim-minimal
+
+# Install necessary system packages
+yum -y install sudovim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel
+yum -y groupinstall "Development Tools"
 
 # pyenv
 curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
