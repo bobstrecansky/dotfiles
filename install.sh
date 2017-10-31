@@ -31,6 +31,10 @@ eval "$(pyenv init -)"
 pyenv install 3.5.2
 cp python/.python-version ~/.python-version
 
+cp i3/config /etc/i3/config
+cp i3/i3status.conf /etc/i3status.conf
+cp i3/style.txt /etc/i3/style.txt
+
 # install YCM
 cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer --system-libclang
 zsh

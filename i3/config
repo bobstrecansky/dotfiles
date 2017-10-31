@@ -160,3 +160,4 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 bindsym --release $mod+x exec --no-startup-id import /tmp/latest-screenshot.png
 bindsym $mod+m exec google-chrome
+exec_always wicd-client --tray
