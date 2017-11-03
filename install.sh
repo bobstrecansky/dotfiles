@@ -1,9 +1,8 @@
-# Install Dependencies                                                                                                                                                                                                                                                                                                                                                      
 # Remove vim-minimal garbage to install regular vim
 yum -y remove vim-minimal
 
 # Install necessary system packages
-yum -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar
+yum -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar brightnessctl newsbeuter
 yum -y groupinstall "Development Tools"
 
 # pyenv
@@ -23,6 +22,8 @@ mkdir -p ~/.vim/colors/
 cp vim/badwolf.vim ~/.vim/colors/
 vim +PluginInstall +qall
 
+# Make Backlight Keys Changeable by a normal user:
+sudo chmod 666 /sys/class/leds/smc::kbd_backlight/brightness
 # install python environment
 PYTHON_CONFIGURE_OPTS="--enable-shared"
 echo $PYTHON_CONFIGURE_OPTS
