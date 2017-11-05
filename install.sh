@@ -2,7 +2,7 @@
 yum -y remove vim-minimal
 
 # Install necessary system packages
-yum -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar brightnessctl newsbeuter
+yum -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar brightnessctl newsbeuter i3 i3lock 
 yum -y groupinstall "Development Tools"
 
 # pyenv
@@ -14,6 +14,8 @@ curl -L https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/in
 # Copy dotfiles
 cp vim/.vimrc ~/.vimrc
 cp zsh/.zshrc ~/.zshrc
+cp i3/config /etc/i3/config
+cp i3/i3status.conf /etc/i3status.conf
 
 # vim plugins
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
