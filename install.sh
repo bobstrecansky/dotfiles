@@ -5,6 +5,9 @@ yum -y remove vim-minimal
 yum -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar brightnessctl newsbeuter
 yum -y groupinstall "Development Tools"
 
+# Install guacamole dependencies
+dnf install -y cairo-devel libjpeg-devel libpng-devel uuid-devel freerdp-devel pango-devel libssh2-devel libssh-devel tomcat tomcat-admin-webapps tomcat-webapps
+
 # pyenv
 curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
 
