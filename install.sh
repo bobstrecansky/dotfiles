@@ -23,7 +23,8 @@ sudo systemctl disable abrtd.service
 sudo systemctl disable cups.service
 
 # Install packages
-sudo dnf -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar htop hg
+# Enable emoji with this document: https://opensource.com/article/19/10/how-type-emoji-linux
+sudo dnf -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar htop hg gnome-tweaks emoji-picker wget jq
 
 # Install media codecs from RPMFusion
 sudo dnf -y install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
@@ -51,6 +52,29 @@ curl -C - https://pkg.scaleft.com/scaleft_yum.repo | sudo tee /etc/yum.repos.d/s
 sudo rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc
 sudo dnf -y install scaleft-client-tools
 sudo dnf -y install scaleft-url-handler
+
+# Install hey (load tester)
+wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
+sudo mv hey_linux_amd64 /usr/local/bin/hey
+sudo chmod +x /usr/local/bin/hey
+
+# Install stern (k8s log streamer)
+URL=$(curl -L -s https://api.github.com/repos/wercker/stern/releases/latest | grep -o -E "https://github.com/wercker/stern/releases/download/(.*)_linux_amd64")
+wget $URL
+chmod +x stern_linux_amd64
+sudo mv stern_linux_amd64 /usr/local/bin/stern
+
+# Install kubectl
+sudo cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+dnf install -y kubectl
 
 # pyenv
 curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
