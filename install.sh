@@ -24,7 +24,7 @@ sudo systemctl disable cups.service
 
 # Install packages
 # Enable emoji with this document: https://opensource.com/article/19/10/how-type-emoji-linux
-sudo dnf -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar htop hg gnome-tweaks emoji-picker wget jq
+sudo dnf -y install sudo vim git zsh tmux cmake patch bzip2-devel readline-devel openssl-devel sqlite-devel python-devel python3-devel automake gcc gcc-c++ kernel-devel clang clang-devel tar htop hg gnome-tweaks emoji-picker wget jq barrier
 
 # Install media codecs from RPMFusion
 sudo dnf -y install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
