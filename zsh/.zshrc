@@ -1,11 +1,11 @@
 # Define oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
- 
+
 # Set ZSH theme
 ZSH_THEME="robbyrussell"
 
 # Activate ZSH plugins
-plugins=(git bundler osx rake ruby python)
+plugins=(git bundler macos rake ruby python ssh-agent)
 
 # use UTF8
 set -g utf8
@@ -27,7 +27,7 @@ PS1="%{$fg[red]%}[%T] %{$fg[cyan]%}%/ ~ %{$reset_color%}"
 #PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
 
 # Grow the size of the history file
-export HISTFILESIZE=2000000
+export HISTFILESIZE=2000
 
 # Grow the size of the per tab or window history buffer in memory
 export HISTSIZE=5000
@@ -38,17 +38,30 @@ export HISTCONTROL=ignoredups
 # Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
+# n prefixes
+export N_PREFIX="$HOME/.n"
+
 # Path Definitions
 export GOPATH=$HOME/go
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin:/usr/local/go/bin:$N_PREFIX/bin"
 
 # Source pyenv and pyvenv
-eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
+
+# Source asdf
+. $(brew --prefix asdf)/asdf.sh
 
 #Source the shell file for zsh
+DISABLE_MAGIC_FUNCTIONS=true
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 # Application Shortcuts
+alias k="kubectl"
+alias katl='kubectl config use-context cluster1.prod'
+alias ksuw='kubectl config use-context cluster2.prod'
+alias ksea='kubectl config use-context cluster3.prod'
+alias kloc='kubectl config use-context local'
+alias captail='stern capstone --exclude server_info --exclude "/status" --exclude GetCertStatus --timestamps --container "(anvil|demo|terminator|validator|worker)"'
 alias gs="git status"
 alias ga="git add -A"
 alias gc="git commit -m $1"
@@ -223,5 +236,3 @@ function nomdepotsync(){
 rsync -rtvz ~/Desktop/thenomdepot -e ssh sshacs@mailchimp.upload.akamai.com:/391386
 }
 
-# Set pyenv properly
-eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
