@@ -1,11 +1,11 @@
 # Define oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
- 
+
 # Set ZSH theme
 ZSH_THEME="robbyrussell"
 
 # Activate ZSH plugins
-plugins=(git bundler osx rake ruby python)
+plugins=(git bundler macos rake ruby python ssh-agent)
 
 # use UTF8
 set -g utf8
@@ -27,7 +27,7 @@ PS1="%{$fg[red]%}[%T] %{$fg[cyan]%}%/ ~ %{$reset_color%}"
 #PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
 
 # Grow the size of the history file
-export HISTFILESIZE=2000000
+export HISTFILESIZE=2000
 
 # Grow the size of the per tab or window history buffer in memory
 export HISTSIZE=5000
@@ -38,17 +38,30 @@ export HISTCONTROL=ignoredups
 # Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
+# n prefixes
+export N_PREFIX="$HOME/.n"
+
 # Path Definitions
 export GOPATH=$HOME/go
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin:/usr/local/go/bin:$N_PREFIX/bin"
 
 # Source pyenv and pyvenv
-eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
+ eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
+
+# Source asdf
+. /usr/local/opt/asdf/libexec/asdf.sh
 
 #Source the shell file for zsh
+DISABLE_MAGIC_FUNCTIONS=true
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 # Application Shortcuts
+alias k="kubectl"
+alias katl='kubectl config use-context cluster1.prod'
+alias ksuw='kubectl config use-context cluster2.prod'
+alias ksea='kubectl config use-context cluster3.prod'
+alias kloc='kubectl config use-context local'
+alias captail='stern capstone --exclude server_info --exclude "/status" --exclude GetCertStatus --timestamps --container "(anvil|demo|terminator|validator|worker)"'
 alias gs="git status"
 alias ga="git add -A"
 alias gc="git commit -m $1"
@@ -65,7 +78,6 @@ alias countdiff="diff -U 0 $1 $2 | grep -v ^@ | wc -l"
 alias urldomain='echo $1 | sed -E "s/https?:\/\/([^\/?]+).*/\1/" | xargs dig'
 alias ipcurl='curl ipinfo.io'
 alias commatospace='cat $1 | sed "s/, /\n/g"'
-alias free='top -l 1 | head -n 10 | grep PhysMem'
 alias zssh='grep ssh ~/.zshrc'
 alias startmysql="sudo /usr/local/mysql/support-files/mysql.server start"
 alias stopmysql=" sudo /usr/local/mysql/support-files/mysql.server stop"
@@ -76,6 +88,8 @@ alias reverse='pbpaste | rev | pbcopy && pbpaste'
 alias ap="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I en1"
 alias checklocal="sudo arp-scan --interface=en0 --localnet"
 alias tunnel="ssh -L 3306:127.0.0.1:3306 $1"
+
+alias linode="/usr/bin/ssh -Y -F /dev/null -i ~/.ssh/linode bob@104.200.18.74"
 
 # Define Akamai Pragma Header
 PRAGMA="Pragma: akamai-x-cache-on, akamai-x-cache-remote-on, akamai-x-check-cacheable, akamai-x-get-cache-key, akamai-x-get-extracted-values, akamai-x-get-nonces, akamai-x-get-ssl-client-session-id, akamai-x-get-true-cache-key, akamai-x-serial-no akamai-x-get-request-id akamai-x-tapioca-trace"
@@ -223,5 +237,3 @@ function nomdepotsync(){
 rsync -rtvz ~/Desktop/thenomdepot -e ssh sshacs@mailchimp.upload.akamai.com:/391386
 }
 
-# Set pyenv properly
-eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
