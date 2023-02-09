@@ -46,10 +46,10 @@ export GOPATH=$HOME/go
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin:/usr/local/go/bin:$N_PREFIX/bin"
 
 # Source pyenv and pyvenv
-# eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
+ eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
 
 # Source asdf
-. $(brew --prefix asdf)/asdf.sh
+. /usr/local/opt/asdf/libexec/asdf.sh
 
 #Source the shell file for zsh
 DISABLE_MAGIC_FUNCTIONS=true
@@ -78,7 +78,6 @@ alias countdiff="diff -U 0 $1 $2 | grep -v ^@ | wc -l"
 alias urldomain='echo $1 | sed -E "s/https?:\/\/([^\/?]+).*/\1/" | xargs dig'
 alias ipcurl='curl ipinfo.io'
 alias commatospace='cat $1 | sed "s/, /\n/g"'
-alias free='top -l 1 | head -n 10 | grep PhysMem'
 alias zssh='grep ssh ~/.zshrc'
 alias startmysql="sudo /usr/local/mysql/support-files/mysql.server start"
 alias stopmysql=" sudo /usr/local/mysql/support-files/mysql.server stop"
@@ -89,6 +88,8 @@ alias reverse='pbpaste | rev | pbcopy && pbpaste'
 alias ap="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I en1"
 alias checklocal="sudo arp-scan --interface=en0 --localnet"
 alias tunnel="ssh -L 3306:127.0.0.1:3306 $1"
+
+alias linode="/usr/bin/ssh -Y -F /dev/null -i ~/.ssh/linode bob@104.200.18.74"
 
 # Define Akamai Pragma Header
 PRAGMA="Pragma: akamai-x-cache-on, akamai-x-cache-remote-on, akamai-x-check-cacheable, akamai-x-get-cache-key, akamai-x-get-extracted-values, akamai-x-get-nonces, akamai-x-get-ssl-client-session-id, akamai-x-get-true-cache-key, akamai-x-serial-no akamai-x-get-request-id akamai-x-tapioca-trace"
