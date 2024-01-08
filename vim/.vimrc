@@ -14,7 +14,6 @@ Plugin 'Lokaltog/powerline'
 Bundle 'ctrlpvim/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'sjl/badwolf'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'fatih/vim-go'
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -24,8 +23,8 @@ syntax on
 set ts=4
 set laststatus=2
 let $PATH = '/usr/local/bin:'.$PATH
-let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/python3'
+let g:ycm_server_python_interpreter = '/Users/bstrecansky/.asdf/installs/python/3.10.10/bin/python'
+let g:ycm_path_to_python_interpreter = '/Users/bstrecansky/.asdf/installs/python/3.10.10/bin/python'
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP ~'

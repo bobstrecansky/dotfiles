@@ -1,3 +1,14 @@
+# profile shell (combined with last line)
+#zmodload zsh/zprof
+
+#auto update oh-my-zsh - https://stackoverflow.com/questions/11378607/oh-my-zsh-disable-would-you-like-to-check-for-updates-prompt
+DISABLE_UPDATE_PROMPT=true
+
+# https://stackoverflow.com/a/38865693
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+
+
 # Define oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 
@@ -5,26 +16,14 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 
 # Activate ZSH plugins
-plugins=(git bundler macos rake ruby python ssh-agent)
+plugins=(git macos)
 
 # use UTF8
 set -g utf8
 
-zstyle -s ':completion:*:hosts' hosts _ssh_config
-[[ -r ~/.ssh/config ]] && _ssh_config+=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p'))
-zstyle ':completion:*:hosts' hosts $_ssh_config
-
 setopt auto_cd
 cdpath=($HOME/git)
-
-#powerline-daemon -q
-#POWERLINE_BASH_CONTINUATION=1
-#POWERLINE_BASH_SELECT=1
-#source /Library/Python/2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-
 PS1="%{$fg[red]%}[%T] %{$fg[cyan]%}%/ ~ %{$reset_color%}"
-#autoload -U colors && colors
-#PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
 
 # Grow the size of the history file
 export HISTFILESIZE=2000
@@ -43,10 +42,12 @@ export N_PREFIX="$HOME/.n"
 
 # Path Definitions
 export GOPATH=$HOME/go
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin:/usr/local/go/bin:$N_PREFIX/bin"
+export GOROOT="/Users/bstrecansky/.asdf/installs/golang/1.19.5/go"
+export GOPRIVATE="github.intuit.com"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/.pyenv/bin:/:/$HOME/go/bin:$N_PREFIX/bin:/usr/local/opt/php@7.4/bin:/usr/local/opt/php@7.4/sbin:/Volumes/CaseSensitive/mc-codesniffer-ruleset/vendor/bin:"
 
 # Source pyenv and pyvenv
- eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)" ; eval "$(pyenv virtualenv-init -)"
 
 # Source asdf
 . /usr/local/opt/asdf/libexec/asdf.sh
@@ -57,10 +58,12 @@ source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 # Application Shortcuts
 alias k="kubectl"
+alias k0='kubectl config use-context cluster0.stage'
 alias katl='kubectl config use-context cluster1.prod'
 alias ksuw='kubectl config use-context cluster2.prod'
 alias ksea='kubectl config use-context cluster3.prod'
 alias kloc='kubectl config use-context local'
+alias kdt='kubectl config use-context desktop'
 alias captail='stern capstone --exclude server_info --exclude "/status" --exclude GetCertStatus --timestamps --container "(anvil|demo|terminator|validator|worker)"'
 alias gs="git status"
 alias ga="git add -A"
@@ -85,50 +88,32 @@ alias weather="curl -4 wttr.in/atlanta"
 alias twitter="t stream timeline"
 # Reverse Text in Clipboard
 alias reverse='pbpaste | rev | pbcopy && pbpaste'
-alias ap="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I en1"
 alias checklocal="sudo arp-scan --interface=en0 --localnet"
 alias tunnel="ssh -L 3306:127.0.0.1:3306 $1"
-
 alias linode="/usr/bin/ssh -Y -F /dev/null -i ~/.ssh/linode bob@104.200.18.74"
+
+function ap() {
+   RED='\033[0;31m'
+   GREEN='\033[0;32m'
+
+   if [ -z "$https_proxy" ]; then
+      export CURL_CA_BUNDLE=~/authproxy_ca.pem
+      export https_proxy=http://127.0.0.1:38080
+      authproxy_darwin
+      printf "${GREEN}AuthProxy enabled${NC}\n"
+   else
+      unset CURL_CA_BUNDLE;
+      unset https_proxy;
+      printf "${RED}AuthProxy disabled${NC}\n"
+   fi;
+}
+
 
 # Define Akamai Pragma Header
 PRAGMA="Pragma: akamai-x-cache-on, akamai-x-cache-remote-on, akamai-x-check-cacheable, akamai-x-get-cache-key, akamai-x-get-extracted-values, akamai-x-get-nonces, akamai-x-get-ssl-client-session-id, akamai-x-get-true-cache-key, akamai-x-serial-no akamai-x-get-request-id akamai-x-tapioca-trace"
 
-function sha(){
-echo | openssl s_client -connect $1:443 2>/dev/null | openssl x509 -subject -dates -fingerprint -noout
-}
-
-# Dig multiple properties listed in ARG1.txt at a time
-function multidig()
-{
- dig -f "$1" +noall +answer;
-}
-
-# Find the primary nameserver:
-function primaryns()
-{
-dig +short SOA "$1" | cut -d' ' -f1
-}
-
-# cURL multiple URLs - find their redirect locations from sourcefile [$1]
-function multicurl()
-{
-xargs curl -sw '%{response_code} %{url_effective}' < $1
-}
-
-# cURL multiple URLs - echo only their response code and their location:
-function inputmulticurl()
-{
-echo "" && xargs -n 1 curl -sL -w "%{http_code} %{url_effective}\n" < $1 -o /dev/null && echo ""
-}
-
-function pragmacurl(){
-curl -s -o /dev/null -D out.txt -H $PRAGMA $1 && cat out.txt
-}
-
-function tldig(){
-dig $1 @a.gtld-servers.net
-}
+export MC_CS_RULESET=/Volumes/CaseSensitive/mc-codesniffer-ruleset/MCStandard
+alias mcphpcs="phpcs --standard=$MC_CS_RULESET"
 
 ### Other Special Variables for cURL:
 #url_effective
@@ -151,89 +136,6 @@ dig $1 @a.gtld-servers.net
 #num_redirects
 #ftp_entry_path
 
-function tailhost(){
- cat /private/etc/hosts | tail -$1;
-}
-
-#turn an MP4 [ARG1] into a MP3 [ARG2]
-function mp4mp3(){
- ffmpeg -i "$1" -f mp3 -ab 320000 -vn "$2";
-}
-
-function genpasswd() { 
-LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 10 | xargs
-}
-
-function gencharpasswd() {
-i="0"
-while [ $i -lt 100 ]
-do
-LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | head -c 10 | 
-xargs
-i=$[$i+1]
-done
-}
- 
-function Httpauth() {
-echo –n “$1” |base64
-}
-
-function stockcurl(){
-curl -s "http://finance.google.com/finance/info?client=ig&q=NASDAQ%3aAKAM" | cat | sed 's/\///g' | jq '.[] | .l'
-}
-
-function hn(){
-echo $1 | sed -E 's/\/[A-Za-z0-9\-\.\#]+\///g'
-}
-
-# Save and reload the history after each command finishes
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
-
-function showHiddenFiles(){
-defaults write com.apple.finder AppleShowAllFiles -bool YES && killall finder
-}
-
-function hideHiddenFiles(){
-defaults write com.apple.finder AppleShowAllFiles -bool NO && killall finder
-}
-
-function sslexpire(){
-echo | openssl s_client -connect $1:443 2>/dev/null | openssl x509 -noout -dates
-}
-
-function sha(){
-echo | openssl s_client -connect $1:443 2>/dev/null | openssl x509 -noout -dates -fingerprint
-}
-
-#  -nd (no directories): download all files to the current directory
-#  -e robots.off: ignore robots.txt files, don't download robots.txt files
-#  -A png,jpg: accept only files with the extensions png or jpg
-#  -m (mirror): -r --timestamping --level inf --no-remove-listing
-function wgetall(){
-wget -r -np -k $1
-}
-
-function tf(){
-echo "(╯°□°)╯︵ ┻━┻"
-}
-
-function cdb(){
-echo "(tableflip)ノ( ゜-゜ノ)"
-}
-
-function darude(){
-echo "༼ つ ◕_◕ ༽つ DUDUDUDUDUDUDUDUDUDU"
-}
-
-function phpserver(){
-php -S localhost:8000
-}
-
-function camera(){
-sudo killall VDCAssistant
-}
-
-function nomdepotsync(){
-rsync -rtvz ~/Desktop/thenomdepot -e ssh sshacs@mailchimp.upload.akamai.com:/391386
-}
+# profile zsh (combined with first line)
+#zprof
 
